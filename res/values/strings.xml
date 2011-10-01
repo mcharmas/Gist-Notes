@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, GistNotesActivity!</string>
-    <string name="app_name">GistNotes</string>
+    <string name="app_name">Gist Notes</string>
+    <string name="description">Description:</string>
+    <string name="fileName">File name:</string>
+    <string name="tab_editor">Editor</string>
+    <string name="tab_preview">Preview</string>
+    <string name="menu_save">Save</string>
+    <string name="menu_cancel">Cancel</string>
+    <string name="menu_about">About</string>
 </resources>
