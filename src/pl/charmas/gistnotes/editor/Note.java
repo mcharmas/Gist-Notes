@@ -12,14 +12,17 @@ import com.petebevin.markdown.MarkdownProcessor;
  *
  */
 public class Note {
-	public static final String AUTHORITY = "pl.charmas.gistnotes";
-	
+	public static final String NOTE = "note";	
 	public static final String KEY_ID = "id";
 	public static final String KEY_FILENAME = "file_name";
 	public static final String KEY_DESCRIPTION = "description";
 	public static final String KEY_CONTENT = "content";
-	
+
+	public static final String AUTHORITY = "pl.charmas.gistnotes";
 	public static final Uri CONTENT_URI = Uri.parse("content://"+AUTHORITY+"/notes");
+	public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.charmas.note";
+	public static final String CONTENT_TYPE_ITEM = "vnd.android.cursor.item/vnd.charmas.note";
+	
 
 	private int id;
 	private String description = "";	
