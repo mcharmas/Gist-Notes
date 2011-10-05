@@ -11,13 +11,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 /**
  * @author Michał Charmas <michal@charmas.pl>
  *
  */
 public class EditorFragment extends Fragment {
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -31,6 +32,16 @@ public class EditorFragment extends Fragment {
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
+	@Override
+	public void onPause() {
+		EditText editor = (EditText) getActivity().findViewById(R.id.editorView);
+		if(editor!=null) {
+			String data = editor.getText().toString();
+			Note n = ((NoteActivity)getActivity()).getNote();
+			n.setContent(data);
+		}			
+		super.onPause();
+	}
 	
 	
 }
