@@ -31,10 +31,17 @@ public class PreviewFragment extends Fragment {
 
 	@Override
 	public void onResume() {
-  		String data = ((NoteActivity)getActivity()).getNote().render();
-		webView.loadData(data, "text/html", "UTF-8");
+		refresh();
 		super.onResume();
 	}
 	
+	public void refresh() {  		
+  		Note note = ((IWithNote)getActivity()).getNote();
+  		if(note!=null)
+  		{
+  			String data = note.render();
+  			webView.loadData(data, "text/html", "UTF-8");  			
+  		}	
+	}
 	
 }

@@ -3,6 +3,13 @@
  */
 package pl.charmas.gistnotes.db;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+
 import pl.charmas.gistnotes.editor.Note;
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -16,6 +23,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -28,7 +36,7 @@ public class NotesProvider extends ContentProvider {
 	private static final String TAG = "NotesProvider";
 	
 	private static final String DB_NAME = "gist_notes.db";
-	private static final int DB_VERSION = 0;
+	private static final int DB_VERSION = 3;
 	
 	private static final String TABLE_NAME = "Notes";
 	
@@ -67,6 +75,14 @@ public class NotesProvider extends ContentProvider {
 	@Override
 	public boolean onCreate() {
 		mDbOpenHelper = new DBOpenHelper(getContext());
+		
+        try {
+			backupDb();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return true;
 	}
 
@@ -76,13 +92,23 @@ public class NotesProvider extends ContentProvider {
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		qb.setTables(TABLE_NAME);
 
+		
 		if(sUriMatcher.match(uri)==CODE_NOTES_ID) {
 			qb.appendWhere(Note.KEY_ID + "=" + uri.getPathSegments().get(1));
+		}
+		
+		if (sortOrder==null || sortOrder=="") {
+		         sortOrder = Note.KEY_DESCRIPTION;
 		}
 		
 		SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
 		Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, sortOrder);
 		c.setNotificationUri(getContext().getContentResolver(), uri);
+//		boolean empty = c.moveToFirst();
+//		String ss = c.getString(0);
+//		String sss = c.getString(1);
+//		String ssss = c.getString(2);
+//		String sssss = c.getString(3);
 		return c;
 	}	
 
@@ -153,7 +179,8 @@ public class NotesProvider extends ContentProvider {
 
         // Put row in DB
         SQLiteDatabase db = mDbOpenHelper.getWritableDatabase();
-        long rowId = db.insert(TABLE_NAME, Note.NOTE, values);
+        //long rowId = db.insert(TABLE_NAME, Note.NOTE, values);
+        long rowId = db.insertOrThrow(TABLE_NAME, null, values);
         if (rowId > 0) {
             Uri noteUri = ContentUris.withAppendedId(Note.CONTENT_URI, rowId);
             getContext().getContentResolver().notifyChange(noteUri, null);
@@ -191,6 +218,58 @@ public class NotesProvider extends ContentProvider {
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 		sUriMatcher.addURI(Note.AUTHORITY, "notes", CODE_NOTES);
 		sUriMatcher.addURI(Note.AUTHORITY, "notes/#", CODE_NOTES_ID);
+	}
+	
+		
+	
+	
+	private void backupDb() throws IOException {
+	    File sd = Environment.getExternalStorageDirectory();
+	    File data = Environment.getDataDirectory();
+
+	    if (sd.canWrite()) {
+
+	        String currentDBPath = "/data/pl.charmas/databases/gist_notes.db";
+	        String backupDBPath = "/charmas_logs/gist_notes.db";
+
+	        File currentDB = new File(data, currentDBPath);
+	        File backupDB = new File(sd, backupDBPath);
+
+	        if (backupDB.exists())
+	            backupDB.delete();
+
+	        if (currentDB.exists()) {
+	            makeLogsFolder();
+
+	            copy(currentDB, backupDB);
+	       }
+
+	        String dbFilePath = backupDB.getAbsolutePath();
+	   }
+	}
+
+	 private void makeLogsFolder() {
+	    try {
+	        File sdFolder = new File(Environment.getExternalStorageDirectory(), "/charmas_logs/");
+	        sdFolder.mkdirs();
+	    }
+	    catch (Exception e) {}
+	  }
+
+	private void copy(File from, File to) throws FileNotFoundException, IOException {
+	    FileChannel src = null;
+	    FileChannel dst = null;
+	    try {
+	        src = new FileInputStream(from).getChannel();
+	        dst = new FileOutputStream(to).getChannel();
+	        dst.transferFrom(src, 0, src.size());
+	    }
+	    finally {
+	        if (src != null)
+	            src.close();
+	        if (dst != null)
+	            dst.close();
+	    }
 	}
 
 }
