@@ -3,8 +3,8 @@
  */
 package pl.charmas.gistnotes.list;
 
-import pl.charmas.gistnotes.editor.IWithNote;
-import pl.charmas.gistnotes.editor.Note;
+import pl.charmas.gistnotes.IWithNote;
+import pl.charmas.gistnotes.Note;
 import android.app.ListFragment;
 import android.content.ContentUris;
 import android.database.Cursor;
@@ -27,7 +27,7 @@ public class NotesListFragment extends ListFragment {
 				Note.FULL_PROJECTION, null, null, null);
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(),
 				android.R.layout.simple_list_item_1, c,
-				new String[] { Note.KEY_FILENAME },
+				new String[] { Note.KEY_DESCRIPTION },
 				new int[] { android.R.id.text1 });
 		setListAdapter(adapter);
 	}

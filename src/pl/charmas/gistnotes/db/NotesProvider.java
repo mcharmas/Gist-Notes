@@ -10,7 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
-import pl.charmas.gistnotes.editor.Note;
+import pl.charmas.gistnotes.Note;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;

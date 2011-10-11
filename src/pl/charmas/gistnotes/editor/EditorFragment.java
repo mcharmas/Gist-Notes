@@ -4,6 +4,7 @@
 package pl.charmas.gistnotes.editor;
 
 import pl.charmas.R;
+import pl.charmas.gistnotes.Note;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;

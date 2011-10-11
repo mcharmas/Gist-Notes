@@ -1,6 +1,11 @@
 package pl.charmas.gistnotes.editor;
 
 import pl.charmas.R;
+import pl.charmas.gistnotes.CloseAlertDialog;
+import pl.charmas.gistnotes.IDialogHandler;
+import pl.charmas.gistnotes.IWithNote;
+import pl.charmas.gistnotes.Note;
+import pl.charmas.gistnotes.PreviewFragment;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;

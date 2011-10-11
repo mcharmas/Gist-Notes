@@ -1,7 +1,7 @@
 /**
  * 
  */
-package pl.charmas.gistnotes.editor;
+package pl.charmas.gistnotes;
 
 /**
  * @author Michał Charmas <michal@charmas.pl>

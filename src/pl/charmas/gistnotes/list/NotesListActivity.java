@@ -4,10 +4,10 @@
 package pl.charmas.gistnotes.list;
 
 import pl.charmas.R;
-import pl.charmas.gistnotes.editor.IWithNote;
-import pl.charmas.gistnotes.editor.Note;
+import pl.charmas.gistnotes.IWithNote;
+import pl.charmas.gistnotes.Note;
+import pl.charmas.gistnotes.PreviewFragment;
 import pl.charmas.gistnotes.editor.NoteActivity;
-import pl.charmas.gistnotes.editor.PreviewFragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

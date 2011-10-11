@@ -1,7 +1,7 @@
 /**
  * 
  */
-package pl.charmas.gistnotes.editor;
+package pl.charmas.gistnotes;
 
 import pl.charmas.R;
 import android.app.Fragment;

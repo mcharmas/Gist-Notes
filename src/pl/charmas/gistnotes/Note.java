@@ -1,7 +1,7 @@
 /**
  * 
  */
-package pl.charmas.gistnotes.editor;
+package pl.charmas.gistnotes;
 
 import android.content.ContentValues;
 import android.database.Cursor;
